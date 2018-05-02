@@ -1,0 +1,26 @@
+8837!Vukicevica - Okretnica!44.5445014!20.0072733!3
+8839!Vukicevica - Prodavnica!44.550875!20.0185317!3
+9135!Vukicevica - Rakicina kuca!44.554585!20.0249717!3
+9092!Orasac - suma!44.5599967!20.0343483!3
+9101!Orasac r - mlin!44.5632333!20.0398583!3
+9054!Orasac - Mikici!44.5693!20.0474933!3
+8835!Orasac R - Vukina kuca!44.574365!20.0539033!3
+8908!Drenski put (raskrsnica)!44.5823433!20.0626867!3
+9244!Grabovac - Filimonovica put!44.590415!20.0721533!3
+9264!Grabovac - Sevar!44.5970033!20.0809567!3
+9395!Grabovac - Brankovici!44.599085!20.0885116!3
+9021!Grabovac - Lazica prodavnica!44.600725!20.09364!3
+8870!Grabovac - Dom Zdravlja!44.6011717!20.1047317!3
+8919!Grabovac - Ekonomija!44.59873!20.109795!3
+9068!Grabovac - Micurina kuca!44.601085!20.117105!3
+9179!Grabovac - Spomenik!44.603665!20.13009!3
+8829!Grabovac - Vocnjak!44.6070217!20.1469067!3
+8952!Stubline - Janoseva kafana!44.60735!20.153205!3
+9201!Stubline - Magacin!44.6136333!20.1616517!3
+8936!Zvecka - rampa!44.6232133!20.174345!3
+9256!Zvecka - Civija!44.6286783!20.1791467!3
+9251!Cveja puskara!44.6368533!20.1827533!3
+9247!Filipovica kraj!44.645165!20.18599!3
+9082!Cara Lazara!44.648195!20.1891367!3
+9193!Stocna pijaca!44.6497367!20.19139!3
+9087!Obrenovac AS!44.6554108!20.196015!3

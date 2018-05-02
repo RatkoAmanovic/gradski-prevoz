@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <regex>
 
 #include "Location.h"
 
@@ -15,6 +16,7 @@ public:
 	Station(int code, string name, double latitude, double longitude, int zone);
 	~Station();
 	friend ostream& operator<<(ostream& it, const Station &s);
+	Station* parse(string line);
 
 private:
 	int code;

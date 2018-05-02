@@ -1,0 +1,21 @@
+7220!Sibnica - Groblje!44.4538648!20.4572196!3
+7218!Sibnica - Izlaz!44.457345!20.4574933!3
+7216!Sibnica - Okretnica!44.4625029!20.4554192!3
+7222!Sibnica - Spomenik!44.473635!20.4494417!3
+7224!Sibnica - Ulaz!44.4775167!20.4561117!3
+7082!Zoroljin (Raskrsnica Sibnice i Slatine)!44.4859933!20.463065!3
+7070!Ducina - Ulaz!44.4863017!20.4734767!3
+7055!Ducina (prof. Milorada Milinkovica)!44.485846!20.488839!3
+7072!Ducina - Centar!44.4847017!20.4963033!3
+9618!Petlovac!44.483075!20.50147!3
+7059!Drlupa raskrsnica!44.4783433!20.50572!3
+7148!Ostojici!44.47787!20.51381!3
+7255!Tresije - Vikend naselje!44.4795383!20.5296!3
+7257!Tresije - Raskrsnica!44.4849724!20.5607988!3
+7142!Nemenikuce - prodavnica!44.49078!20.56377!3
+7121!Nemenikuce - Skola!44.49643!20.5640667!3
+7086!Nemenikuce - Jekica kuce!44.50208!20.559883!3
+7119!Nemenikuce - Naselje!44.5072583!20.567975!3
+7228!Sopot - Izlaz!44.5147417!20.5700217!3
+8541!Sopot (spomenik)!44.519499!20.574714!3
+7094!Sopot AS!44.5224917!20.5770044!3

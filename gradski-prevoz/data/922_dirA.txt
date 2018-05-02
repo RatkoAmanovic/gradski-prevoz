@@ -1,0 +1,23 @@
+9086!Obrenovac AS!44.6561942!20.1980058!3
+9253!Crna tacka!44.6530633!20.1911567!3
+7023!Obrenovac - 14.oktobar!44.6536516!20.1824533!3
+9119!Zvecka - Pirocanci!44.6545867!20.17324!3
+9077!Zvecka - nadvoznjak!44.653785!20.1619617!3
+8944!Zvecka - Isailovici!44.6506283!20.1516633!3
+9112!Zvecka - Petronijevici!44.6482383!20.144005!3
+9129!Zvecka - Radio stanica!44.646295!20.13613!3
+9084!Ratari - Nurca!44.6480817!20.124375!3
+9071!Ratari - Miskovici!44.6511567!20.1154083!3
+9138!Ratari - Dom!44.6550133!20.10899!3
+9141!Ratari - Prodavnica - Selo!44.6548867!20.10277!3
+9145!Ratari raskrsnica - Okretnica!44.6491383!20.1054283!3
+9069!Miskovici izlaz na sabacki put!44.6513283!20.1149717!3
+9085!Ratari - Nurca!44.6478783!20.12531!3
+9130!Zvecka - Radio stanica!44.64616!20.137315!3
+9113!Zvecka - Petronijevici!44.64821!20.1441433!3
+8945!Zvecka - Isailovici!44.650575!20.15174!3
+9079!Zvecka - nadvoznjak!44.6534133!20.1610767!3
+9122!Zvecka - Pirocanci!44.65457!20.1732917!3
+7024!Obrenovac - 14.oktobar!44.653615!20.182925!3
+9254!Crna tacka!44.65309!20.1906283!3
+9087!Obrenovac AS!44.6554108!20.196015!3

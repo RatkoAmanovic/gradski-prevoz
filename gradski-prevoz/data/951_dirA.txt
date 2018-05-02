@@ -1,0 +1,18 @@
+9086!Obrenovac AS!44.6561942!20.1980058!3
+9081!Cara Lazara!44.6481917!20.1890833!3
+9246!Filipovica kraj!44.644315!20.184765!3
+9250!Cveja puskara!44.6361667!20.1823533!3
+9255!Zvecka - Civija!44.6280066!20.1785383!3
+8935!Zvecka - rampa!44.6223433!20.1732367!3
+8805!Veliko polje - R (Gornji kraj)!44.6193483!20.170595!3
+8858!Veliko polje - Prodavnica!44.61324!20.17601!3
+8857!Veliko polje (Okretnica - Gornji kraj)!44.6100144!20.1840469!3
+8821!Veliko polje (Trafo-Novi put)!44.6116267!20.1784267!3
+9187!Veliko polje (Stepici - Novi put)!44.6069917!20.1743283!3
+8820!Veliko polje (Izlaz na srednji kraj-Novi put)!44.6045067!20.1713517!3
+9188!Stepici srednji kraj!44.602035!20.1737433!3
+8808!Veliko polje - Igraliste!44.5951683!20.1757367!3
+8812!Veliko polje - Stanobara!44.5893117!20.178995!3
+8818!Veliko polje - Zivinarska farma!44.5833567!20.1728433!3
+8806!Veliko polje - Dalekovod!44.5752017!20.1746733!3
+8810!Veliko polje - Stamenica kraj - Okretnica!44.5719817!20.1779733!3
