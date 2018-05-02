@@ -9,9 +9,10 @@ int main()
 	cout << vuk1 << "\n";
 
 	Line semdescetiri("74", "Vukov spomenik", "Vukofqceqv spomeini");
-	semdescetiri.addStationToA(vuk);
-	semdescetiri.addStationToA(vuk1);
+	semdescetiri.addStation(vuk, 'a');
+	semdescetiri.addStation(vuk1, 'a');
 
+	
+	semdescetiri.readStations('a');
 	cout << semdescetiri;
-	semdescetiri.readStationsToA();
 }

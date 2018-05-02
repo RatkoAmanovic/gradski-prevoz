@@ -13,10 +13,12 @@ public:
 	Line(string code, string firstStop, string lastStop);
 	~Line();
 	friend ostream& operator<<(ostream& it, const Line& l);
-	void addStationToA(const Station s);
-	void addStationToB(const Station s);
-	void readStationsToA();
-	void readStationsToB();
+	void addStation(const Station s, char aOrB);
+	void readStations(char aOrB);
+	Station parseStation(string line);
+	Line parseLine(string line);
+
+
 private:
 	string code;
 	string firstStop;
