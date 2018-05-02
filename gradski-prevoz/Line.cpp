@@ -76,20 +76,3 @@ Station Line::parseStation(string line)
 	}
 }
 
-Line Line::parseLine(string textLine)
-{
-	regex reg("(.+)!(.+)!(.+)!");
-	smatch result;
-
-	if (regex_match(textLine, result, reg))
-	{
-		string code = result.str(1);
-		string firstStop = result.str(2);
-		string lastStop = result.str(3);
-		Line line(code, firstStop, lastStop);
-		return line;
-	}
-	else {
-		cout << "No match" << endl;
-	}
-}

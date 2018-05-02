@@ -16,7 +16,6 @@ public:
 	void addStation(const Station s, char aOrB);
 	void readStations(char aOrB);
 	Station parseStation(string line);
-	Line parseLine(string line);
 
 
 private:
