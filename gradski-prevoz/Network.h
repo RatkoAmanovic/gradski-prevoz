@@ -9,12 +9,12 @@ class Network
 public:
 	Network();
 	~Network();
-	void addLine(const Line l);
+	void addLine(Line* l);
 	void readLines();
-	Line parseLine(string line);
+	Line* parseLine(string line);
 	friend ostream& operator<<(ostream& it, const Network n);
 private:
-	vector<Line> lines;
+	vector<Line*> lines;
 };
 
 #endif // !__NETWORK_H_

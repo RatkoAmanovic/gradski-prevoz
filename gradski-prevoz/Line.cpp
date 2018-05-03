@@ -11,7 +11,7 @@ Line::~Line()
 {
 }
 
-void Line::addStation(const Station s, char aOrB)
+void Line::addStation(Station *s, char aOrB)
 {
 	if (aOrB == 'a' || aOrB == 'A')
 		AfirstToLastStation.push_back(s);
@@ -31,35 +31,21 @@ void Line::readStations(char aOrB)
 	{
 		while (getline(dir, lineInFile))
 		{
-			Station station = parseStation(lineInFile);
-			
+			Station* station = parseStation(lineInFile);
+
 			addStation(station, aOrB);
-			Station::addStationAndLine(station, *this, code);
+			Station::addStationAndLine(station, this, code);
+
+			station = nullptr;
 		}
 		dir.close();
 	}
 	else cout << "Unable to open file";
 }
 
-ostream & operator<<(ostream & it, const Line & l)
-{
-	it << "Linija: " << l.code;
-	it << " Pocetno stajaliste: " << l.firstStop;
-	it << " Poslednje stajaliste: " << l.lastStop;
-	it << "\nSmer A\n";
-	for(Station s : l.AfirstToLastStation)
-	{
-		it << s << "\n";
-	}
-	it << "Smer B\n";
-	for (Station s : l.BlastToFirstStation)
-	{
-		it << s << "\n";
-	}
-	return it;
-}
 
-Station Line::parseStation(string line)
+
+Station* Line::parseStation(string line)
 {
 
 	regex reg("([0-9]+)!(.+)!([0-9]+.[0-9]+)!([0-9]+.[0-9]+)!([0-9]+)");
@@ -71,11 +57,29 @@ Station Line::parseStation(string line)
 		double latitude = atof(result.str(3).c_str());
 		double longitude = atof(result.str(4).c_str());
 		int zone = atoi(result.str(5).c_str());
-		Station s(code, name, latitude, longitude, zone);
+		Station* s = new Station(code, name, latitude, longitude, zone);
 		return s;
 	}
 	else {
 		cout << "No match" << endl;
+		return nullptr;
 	}
 }
 
+ostream & operator<<(ostream & it, const Line & l)
+{
+	it << "Linija: " << l.code;
+	it << " Pocetno stajaliste: " << l.firstStop;
+	it << " Poslednje stajaliste: " << l.lastStop;
+	it << "\nSmer A\n";
+	for (Station *s : l.AfirstToLastStation)
+	{
+		it << *s << "\n";
+	}
+	it << "Smer B\n";
+	for (Station *s : l.BlastToFirstStation)
+	{
+		it << *s << "\n";
+	}
+	return it;
+}

@@ -13,9 +13,9 @@ public:
 	Line(string code, string firstStop, string lastStop);
 	~Line();
 	friend ostream& operator<<(ostream& it, const Line& l);
-	void addStation(const Station s, char aOrB);
+	void addStation(Station* s, char aOrB);
 	void readStations(char aOrB);
-	Station parseStation(string line);
+	Station* parseStation(string line);
 	string getCode() { return code; }
 
 
@@ -23,7 +23,7 @@ private:
 	string code;
 	string firstStop;
 	string lastStop;
-	vector<Station> AfirstToLastStation;
-	vector<Station> BlastToFirstStation;
+	vector<Station*> AfirstToLastStation;
+	vector<Station*> BlastToFirstStation;
 };
 #endif // !__LINE_H_

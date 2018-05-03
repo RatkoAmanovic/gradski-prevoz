@@ -16,10 +16,10 @@ class Station
 public:
 	Station(int code, string name, double latitude, double longitude, int zone);
 	~Station();
+	static void addStationAndLine(Station *s, Line *l, string lineCode);
 	friend ostream& operator<<(ostream& it, const Station &s);
-	static void addStationAndLine(Station& s, Line& l, string lineCode);
-	static Station& getStation(int code);
-	void addLine(Line & l, string lineCode);
+	static Station* getStation(int code) { return stations[code]; }
+	void addLine(Line *l, string lineCode);
 
 private:
 	int code;
