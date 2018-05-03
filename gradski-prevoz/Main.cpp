@@ -5,5 +5,5 @@ int main()
 	
 	Network mreza;
 	mreza.readLines();
-
+	cout << mreza;
 }

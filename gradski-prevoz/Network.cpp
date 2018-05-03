@@ -27,7 +27,6 @@ void Network::readLines()
 		while (getline(dir, lineInFile))
 		{
 			Line line = parseLine(lineInFile);
-			cout << line << "\n";
 			addLine(line);
 		}
 		dir.close();
@@ -46,9 +45,20 @@ Line Network::parseLine(string textLine)
 		string firstStop = result.str(2);
 		string lastStop = result.str(3);
 		Line line(code, firstStop, lastStop);
+		line.readStations('a');
+		line.readStations('b');
 		return line;
 	}
 	else {
 		cout << "No match" << endl;
 	}
+}
+
+ostream & operator<<(ostream & it, const Network n)
+{
+	for (Line l : n.lines)
+	{
+		it << l << "\n\n\n";
+	}
+	return it;
 }

@@ -34,6 +34,7 @@ void Line::readStations(char aOrB)
 			Station station = parseStation(lineInFile);
 			
 			addStation(station, aOrB);
+			Station::addStationAndLine(station, *this, code);
 		}
 		dir.close();
 	}
@@ -43,6 +44,8 @@ void Line::readStations(char aOrB)
 ostream & operator<<(ostream & it, const Line & l)
 {
 	it << "Linija: " << l.code;
+	it << " Pocetno stajaliste: " << l.firstStop;
+	it << " Poslednje stajaliste: " << l.lastStop;
 	it << "\nSmer A\n";
 	for(Station s : l.AfirstToLastStation)
 	{
