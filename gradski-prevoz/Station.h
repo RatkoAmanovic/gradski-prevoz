@@ -20,6 +20,8 @@ public:
 	friend ostream& operator<<(ostream& it, const Station &s);
 	static Station* getStation(int code) { return stations[code]; }
 	void addLine(Line *l, string lineCode);
+	int getZone() { return zone; }
+	int getCode() { return code; }
 
 private:
 	int code;

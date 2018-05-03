@@ -45,8 +45,8 @@ Line* Network::parseLine(string textLine)
 		string firstStop = result.str(2);
 		string lastStop = result.str(3);
 		Line* line = new Line(code, firstStop, lastStop);
-		(*line).readStations('a');
-		(*line).readStations('b');
+		(*line).readStations(Direction::A);
+		(*line).readStations(Direction::B);
 		return line;
 	}
 	else {

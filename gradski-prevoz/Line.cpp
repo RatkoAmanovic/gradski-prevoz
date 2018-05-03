@@ -11,20 +11,69 @@ Line::~Line()
 {
 }
 
-void Line::addStation(Station *s, char aOrB)
+void Line::addStationAndZone(Station *s, Direction d)
 {
-	if (aOrB == 'a' || aOrB == 'A')
-		AfirstToLastStation.push_back(s);
-	if (aOrB == 'b' || aOrB == 'B')
-		BlastToFirstStation.push_back(s);
+	addZone((*s).getZone());
+	if (d==Direction::A)
+		A_firstToLastStation.push_back(s);
+	if (d==Direction::B)
+		B_lastToFirstStation.push_back(s);
 }
 
 
+void Line::addZone(int zone)
+{
+	if (zones[zone - 1] == 0)
+		zones[zone - 1] = 1;
+}
 
-void Line::readStations(char aOrB)
+void Line::removeStation(int code, Direction d)
+{
+	if (d == Direction::A)
+	{
+		int i = 0;
+		for (Station* s : A_firstToLastStation)
+		{
+			if (code == (*s).getCode())
+			{
+				A_firstToLastStation.erase(A_firstToLastStation.begin() + i);
+				return;
+			}
+			i++;
+		}
+	}
+
+	if (d == Direction::B)
+	{
+		int i = 0;
+		for (Station* s : B_lastToFirstStation)
+		{
+			if (code == (*s).getCode())
+			{
+				B_lastToFirstStation.erase(B_lastToFirstStation.begin() + i);
+				return;
+			}
+			i++;
+		}
+	}
+}
+
+void Line::addStationToLocation(Station * s, Direction d, int location)
+{
+	if (d == Direction::A)
+		A_firstToLastStation.insert(A_firstToLastStation.begin() + location, s);
+	if (d == Direction::B)
+		B_lastToFirstStation.insert(B_lastToFirstStation.begin() + location, s);
+}
+
+void Line::readStations(Direction d)
 {
 	ifstream dir;
-	string fileName = "data\\" + code + "_dir"+aOrB+".txt";
+	string fileName;
+	if(d == Direction::A)
+		fileName = "data\\" + code + "_dirA.txt";
+	if(d == Direction::B)
+		fileName = "data\\" + code + "_dirB.txt"; 
 	dir.open(fileName);
 	string lineInFile;
 	if (dir.is_open())
@@ -32,10 +81,8 @@ void Line::readStations(char aOrB)
 		while (getline(dir, lineInFile))
 		{
 			Station* station = parseStation(lineInFile);
-
-			addStation(station, aOrB);
+			addStationAndZone(station, d);
 			Station::addStationAndLine(station, this, code);
-
 			station = nullptr;
 		}
 		dir.close();
@@ -72,12 +119,12 @@ ostream & operator<<(ostream & it, const Line & l)
 	it << " Pocetno stajaliste: " << l.firstStop;
 	it << " Poslednje stajaliste: " << l.lastStop;
 	it << "\nSmer A\n";
-	for (Station *s : l.AfirstToLastStation)
+	for (Station *s : l.A_firstToLastStation)
 	{
 		it << *s << "\n";
 	}
 	it << "Smer B\n";
-	for (Station *s : l.BlastToFirstStation)
+	for (Station *s : l.B_lastToFirstStation)
 	{
 		it << *s << "\n";
 	}
