@@ -10,7 +10,9 @@ public:
 	Network();
 	~Network();
 	void addLine(Line* l);
+	void removeLine(Line* l);
 	void readLines();
+	void readLine(string code);
 	Line* parseLine(string line);
 	friend ostream& operator<<(ostream& it, const Network n);
 private:

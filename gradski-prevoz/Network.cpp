@@ -16,6 +16,17 @@ void Network::addLine(Line* l)
 	lines.push_back(l);
 }
 
+void Network::removeLine(Line * l)
+{
+	int i = 0;
+	for (Line* line : lines)
+	{
+		if (l == line)
+			lines.erase(lines.begin() + i);
+		i++;
+	}
+}
+
 void Network::readLines()
 {
 	ifstream dir;
@@ -28,6 +39,28 @@ void Network::readLines()
 		{
 			Line* line = parseLine(lineInFile);
 			addLine(line);
+		}
+		dir.close();
+	}
+	else cout << "Unable to open file";
+}
+
+void Network::readLine(string code)
+{
+	ifstream dir;
+	string fileName = "data\\_lines.txt";
+	dir.open(fileName);
+	string lineInFile;
+	if (dir.is_open())
+	{
+		while (getline(dir, lineInFile))
+		{
+			Line* line = parseLine(lineInFile);
+			if (line->getCode == code)
+			{
+				addLine(line);
+				break;
+			}
 		}
 		dir.close();
 	}
