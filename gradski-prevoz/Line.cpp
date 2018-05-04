@@ -68,6 +68,25 @@ void Line::addStationToLocation(Station * s, Direction d, int location)
 		B_lastToFirstStation.insert(B_lastToFirstStation.begin() + location, s);
 }
 
+bool Line::isStationOnLine(int station, Direction d)
+{
+	if (d == Direction::A)
+	{
+		auto it = find_if(A_firstToLastStation.begin(), A_firstToLastStation.end(), [station](Station* s) {return (*s).getCode() == station; });
+			if (it != A_firstToLastStation.end())
+				return true;
+			return false;
+	}
+	if (d == Direction::B)
+	{
+		auto it = find_if(B_lastToFirstStation.begin(), B_lastToFirstStation.end(), [station](Station* s) {return (*s).getCode() == station; });
+		if (it != B_lastToFirstStation.end())
+			return true;
+		return false;
+	}
+	return false;
+}
+
 void Line::readStations(Direction d)
 {
 	ifstream dir;

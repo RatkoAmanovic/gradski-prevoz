@@ -22,6 +22,10 @@ public:
 	inline void setMaxNumberOfStations(int number) { maxNumberOfStations = number; }
 	inline void setMinNumberOfStations(int number) { minNumberOfStations = number; }
 	unordered_set<Line*> getLinesWithMutualStations(string line);
+	bool areStationsOnSameLineAndDirection(string line, int station1, int station2);
+	Line* lineWithMostMutualStation(string line);
+	Station* closestStation(double latitude, double longitude, string line = "");
+	
 private:
 	vector<Line*> lines;
 	int zone;

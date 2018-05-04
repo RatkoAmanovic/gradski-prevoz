@@ -27,7 +27,11 @@ public:
 	inline int getZone() const { return zone; }
 	inline int getNumber() const { return number; }
 	inline int getNumberOfStations() const { return A_firstToLastStation.size() + B_lastToFirstStation.size(); }
-
+	bool isStationOnLine(int station, Direction d);
+	auto getA_firstBegin() { return A_firstToLastStation.begin(); }
+	auto getA_firstEnd() { return A_firstToLastStation.end(); }
+	auto getB_lastBegin() { return B_lastToFirstStation.begin(); }
+	auto getB_lastEnd() { return B_lastToFirstStation.end(); }
 private:
 	string code;
 	string firstStop;

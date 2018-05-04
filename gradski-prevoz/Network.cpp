@@ -119,6 +119,86 @@ unordered_set<Line*> Network::getLinesWithMutualStations(string line)
 	return mutualLines;
 }
 
+bool Network::areStationsOnSameLineAndDirection(string line, int station1, int station2)
+{
+	int index;
+	auto it = find_if(lines.begin(), lines.end(), [line](Line* lin) {return (*lin).getCode() == line; });
+	if (it != lines.end())
+		index = distance(lines.begin(), it);
+	Line lineObj = *lines[index];
+	
+	if (lineObj.isStationOnLine(station1, Direction::A))
+		if (lineObj.isStationOnLine(station2, Direction::A))
+			return true;
+	if (lineObj.isStationOnLine(station1, Direction::B))
+		if (lineObj.isStationOnLine(station2, Direction::B))
+			return true;
+
+	return false;
+}
+
+Line * Network::lineWithMostMutualStation(string line)
+{
+	unordered_map<Line*,int> mutualLines;
+	for (auto it = Station::getStationsBegin(); it != Station::getStationsEnd(); ++it)
+	{
+		if (it->second->isInLines(line))
+			for (auto it1 = it->second->getLinesBegin(); it1 != it->second->getLinesEnd(); ++it1)
+			{
+				if (it1->first != line)
+					mutualLines[it1->second]++;
+			}
+	}
+	Line* maxLine = nullptr;
+	int max = 0;
+	for (auto p : mutualLines)
+	{
+		if (p.second > max)
+		{
+			maxLine = p.first;
+			max = p.second;
+		}
+	}
+	return maxLine;
+}
+
+Station * Network::closestStation(double latitude, double longitude, string line)
+{
+	if (line == "")
+	{
+		double minDistance = 200000;
+		Station* s = nullptr;
+		for (auto it = Station::getStationsBegin(); it != Station::getStationsEnd(); ++it)
+		{
+			double distance = Location::distance(it->second->getStationLatitude(), it->second->getStationLongitude(), latitude, longitude);
+			if (distance < minDistance)
+			{
+				minDistance = distance;
+				s = it->second;
+			}
+		}
+		return s;
+	}
+	else {//TODO moze brze
+		double minDistance = 200000;
+		Station* s = nullptr;
+		for (auto it = Station::getStationsBegin(); it != Station::getStationsEnd(); ++it)
+		{
+			if (it->second->isInLines(line))
+				for (auto it1 = it->second->getLinesBegin(); it1 != it->second->getLinesEnd(); ++it1)
+				{
+					double distance = Location::distance(it->second->getStationLatitude(), it->second->getStationLongitude(), latitude, longitude);
+					if (distance < minDistance)
+					{
+						minDistance = distance;
+						s = it->second;
+					}
+				}
+		}
+		return s;
+	}
+}
+
 ostream & operator<<(ostream & it, const Network n)
 {
 	for (Line* l : n.lines)

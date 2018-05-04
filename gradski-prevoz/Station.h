@@ -27,6 +27,8 @@ public:
 	auto getLinesBegin() { return lines.begin(); }
 	auto getLinesEnd() { return lines.end(); }
 	bool isInLines(string line) { return lines.find(line) != lines.end(); }
+	double getStationLatitude() { return location.getLatitude(); }
+	double getStationLongitude() { return location.getLongitude(); }
 
 private:
 	int code;

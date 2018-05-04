@@ -5,8 +5,10 @@ void filterByNumber(Network *n);
 void filterByNumberOfStations(Network *n);
 void mainMenu();
 void groupMode(Network *n);
-void groupModeMenu(Network *n); 
+void groupModeMenu(Network *n);
 void groupModeMenuText();
+void closestStation(Network* n);
+void stations1DistanceAway(Network *n);
 
 int main()
 {
@@ -165,15 +167,22 @@ void groupMode(Network *n)
 	filterByNumber(n);
 	filterByNumberOfStations(n);
 	(*n).readLines();
-	groupModeMenu(n);
+	while (1) {
+		groupModeMenu(n);
+	}
 	(*n).~Network();
+	
 }
 
 void groupModeMenu(Network *n)
 {
 	int control;
 	int number;
+	int number2;
+	double latitude;
+	double longitude;
 	string line;
+	Station *s;
 	do {
 		groupModeMenuText();
 		cin >> control;
@@ -188,16 +197,42 @@ void groupModeMenu(Network *n)
 		cout << "Unesite sifru linije, velikim slovima slova\n";
 		cin >> line;
 		n->getLinesWithMutualStations(line);
+		cout << "\n";
 		break;
-	case 3:
-		cout << "Unesite broj od koga zelite da brojevi linija budu veci\n";
+	case 3://Odredjivanje da li data linija prolazi kroz zadata dva stajalista u istom smeru svog kretanja
+		cout << "Unesite sifru linije, velikim slovima\n";
+		cin >> line;
+		cout << "Unesite sifru prvog stajalista\n";
 		cin >> number;
-		n->setNumberMin(number);
-		cout << "Unesite broj od koga zelite da brojevi linija budu manji\n";
-		cin >> number;
-		n->setNumberMax(number);
+		cout << "Unesite sifru drugog stajalista\n";
+		cin >> number2;
+		if (n->areStationsOnSameLineAndDirection(line, number, number2))
+			cout << "Jesu\n";
+		else
+			cout << "Nisu\n";
 		break;
-	case 4:
+	case 4://Odredjivanje linije sa kojom data linija ima najvise zajednickih stajalista
+		cout << "Unesite sifru linije, velikim slovima\n";
+		cin >> line;
+		cout << n->lineWithMostMutualStation(line)->getCode() << "\n";
+		break;//TODO: Prikaz svih maksimalnih
+	case 5://Odredjivanje najblizeg stajalista u odnosu na zadatu geografsku lokaciju, 
+		   //uz mogucnost odredjivanja najblizeg stajalista samo odredjenje linije
+		closestStation(n);
+		break;
+	case 6://Odredjivanje broja zajednickih stajalista za sve parove linija koje imaju zajednicko stajaliste,
+		   //uz mogucnost filtriranja na parove linija koje imaju zajednickih stajalista vise od zadatog broja
+		break;
+	case 7://Odredjivanje svih linija koje prolaze kroz dato stajaliste
+		cout << "Unesite sifru stajalista\n";
+		cin >> number;
+		s = Station::getStation(number);
+		for (auto it = s->getLinesBegin(); it != s->getLinesEnd(); ++it)
+			cout << it->first << " ";
+		cout << "\n";
+		break;
+	case 8:
+		stations1DistanceAway(n);
 		break;
 	case 0:
 		exit(0);
@@ -221,4 +256,60 @@ void groupModeMenuText()
 	cout << "9.  Odredjivanje najmanjeg potrebnog broja presedanja na putu izmedju dva zadata stajalista\n";
 	cout << "10. Odredjivanje najkraceg puta izmedju dva stajalista(ne uzimati u obzir geografsku lokaciju,\n    vec za najkraci put uzeti onaj koji se sastoji od najmanjeg broja stajalista)\n";
 	cout << "0.  Izlaz\n";
+}
+
+void closestStation(Network* n) {
+	double latitude;
+	double longitude;
+	int number;
+	string line;
+	cout << "Unesite geografsku sirinu lokacije\n";
+	cin >> latitude;
+	cout << "Unesite geografsku duzinu lokacije\n";
+	cin >> longitude;
+	cout << "Za specificiranje linije unesite 1, u suprotnom 0\n";
+	cin >> number;
+	if (number == 1)
+	{
+		cout << "Unesite sifru linije, velikim slovima\n";
+		cin >> line;
+	}
+	else
+		line = "";
+	cout << "Najblize stajaliste je: " << *(n->closestStation(latitude, longitude, line)) << "\n";
+}
+
+void stations1DistanceAway(Network *n)
+{
+	int number;
+	cout << "Unesite sifru stajalista\n";
+	cin >> number;
+	Station *s = Station::getStation(number);
+	for (auto it = s->getLinesBegin(); it != s->getLinesEnd(); ++it)
+	{
+		if (it->second->isStationOnLine(number, Direction::A))
+		{
+			for (auto it1 = it->second->getA_firstBegin(); it1 != it->second->getA_firstEnd(); ++it1)
+			{
+				if ((*it1)->getCode() == number)
+				{
+					++it1;
+					cout << *(*it1) << "\n";
+					break;
+				}
+			}
+		}
+		else
+		{
+			for (auto it1 = it->second->getB_lastBegin(); it1 != it->second->getB_lastEnd(); ++it1)
+			{
+				if ((*it1)->getCode() == number)
+				{
+					++it1;
+					cout << *(*it1) << "\n";
+					break;
+				}
+			}
+		}
+	}
 }
