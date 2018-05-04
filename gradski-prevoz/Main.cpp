@@ -3,6 +3,10 @@
 void selectZone(Network *n);
 void filterByNumber(Network *n);
 void filterByNumberOfStations(Network *n);
+void mainMenu();
+void groupMode(Network *n);
+void groupModeMenu(Network *n); 
+void groupModeMenuText();
 
 int main()
 {
@@ -12,21 +16,14 @@ int main()
 	while (1) {
 		do
 		{
-			cout << "Unesite koji rezim rada zelite?\n";
-			cout << "1. Grupni rezim rada\n";
-			cout << "2. Pojedinacni rezim rada\n";
-			cout << "0. Izlaz\n";
+			mainMenu();
 			cin >> control;
-		} while (control<0 && control>2);
+		} while (control<0 || control>2);
+		
 		switch (control)
 		{
 		case 1:
-			selectZone(&network);
-			filterByNumber(&network);
-			filterByNumberOfStations(&network);
-			network.readLines();
-			cout << network;
-			network.~Network();
+			groupMode(&network);
 			break;
 		case 2:
 			cout << "Unesite koju liniju zelite da pregledate\n";
@@ -52,7 +49,7 @@ void selectZone(Network *n)
 		cout << "4. Sve zone\n";
 		cout << "0. Izlaz\n";
 		cin >> zone;
-	} while (zone < 0 && zone>4);
+	} while (zone < 0 || zone>4);
 
 	switch (zone)
 	{
@@ -88,7 +85,7 @@ void filterByNumber(Network *n)
 		cout << "4. Bez filtera\n";
 		cout << "0. Izlaz\n";
 		cin >> control;
-	} while (control < 0 && control>4);
+	} while (control < 0 || control>4);
 
 	switch (control)
 	{
@@ -131,7 +128,7 @@ void filterByNumberOfStations(Network *n)
 		cout << "3. Bez filtera\n";
 		cout << "0. Izlaz\n";
 		cin >> control;
-	} while (control < 0 && control>4);
+	} while (control < 0 || control>3);
 
 	switch (control)
 	{
@@ -153,4 +150,74 @@ void filterByNumberOfStations(Network *n)
 	default:
 		break;
 	}
+}
+
+void mainMenu() {
+	cout << "Unesite koji rezim rada zelite?\n";
+	cout << "1. Grupni rezim rada\n";
+	cout << "2. Pojedinacni rezim rada\n";
+	cout << "0. Izlaz\n";
+}
+
+void groupMode(Network *n)
+{
+	selectZone(n);
+	filterByNumber(n);
+	filterByNumberOfStations(n);
+	(*n).readLines();
+	groupModeMenu(n);
+	(*n).~Network();
+}
+
+void groupModeMenu(Network *n)
+{
+	int control;
+	int number;
+	do {
+		groupModeMenuText();
+		cin >> control;
+	} while (control < 0 && control>10);
+
+	switch (control)
+	{
+	case 1:
+		cout << *n;
+		break;
+	case 2:
+		cout << "Unesite broj od koga zelite da brojevi linija budu veci\n";
+		cin >> number;
+		n->setNumberMin(number);
+		break;
+	case 3:
+		cout << "Unesite broj od koga zelite da brojevi linija budu veci\n";
+		cin >> number;
+		n->setNumberMin(number);
+		cout << "Unesite broj od koga zelite da brojevi linija budu manji\n";
+		cin >> number;
+		n->setNumberMax(number);
+		break;
+	case 4:
+		break;
+	case 0:
+		exit(0);
+		break;
+	default:
+		break;
+	}
+}
+
+void groupModeMenuText()
+{
+	cout << "Izaberite aktivnost koju zelite da izvrsite!\n";
+	cout << "1.  Stampanje mreze\n";
+	cout << "2.  Odredjivanje skupa linija sa kojima data linija ima zajednicka stajalista(bez obzira na smer kretanja)\n";
+	cout << "3.  Odredjivanje da li data linija prolazi kroz zadata dva stajalista u istom smeru svog kretanja\n";
+	cout << "4.  Odredjivanje linije sa kojom data linija ima najvise zajednickih stajalista\n";
+	cout << "5.  Odredjivanje najblizeg stajalista u odnosu na zadatu geografsku lokaciju,\n    uz mogucnost odredjivanja najblizeg stajalista samo odredjenje linije\n";
+	cout << "6.  Odredjivanje broja zajednickih stajalista za sve parove linija koje imaju zajednicko stajaliste, \n    uz mogucnost filtriranja na parove linija koje imaju zajednickih stajalista vise od zadatog broja\n";
+	cout << "7.  Odredjivanje svih linija koje prolaze kroz dato stajaliste\n";
+	cout << "8.  Odredjivanje svih stajalista do kojih je moguce stici iz zadatog stajalista uz voznju maksimalno jednu stanicu\n";
+	cout << "9.  Odredjivanje najmanjeg potrebnog broja presedanja na putu izmedju dva zadata stajalista\n";
+	cout << "10. Odredjivanje najkraceg puta izmedju dva stajalista(ne uzimati u obzir geografsku lokaciju,\n    vec za najkraci put uzeti onaj koji se sastoji od najmanjeg broja stajalista)\n";
+	cout << "0.  Izlaz\n";
 }
