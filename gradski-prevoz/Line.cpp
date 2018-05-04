@@ -1,10 +1,11 @@
 #include "Line.h"
 
-Line::Line(string code, string firstStop, string lastStop)
+Line::Line(string code, string firstStop, string lastStop, int number)
 {
 	this->code = code;
 	this->firstStop = firstStop;
 	this->lastStop = lastStop;
+	this->number = number;
 }
 
 Line::~Line()
@@ -23,8 +24,8 @@ void Line::addStationAndZone(Station *s, Direction d)
 
 void Line::addZone(int zone)
 {
-	if (zones[zone - 1] == 0)
-		zones[zone - 1] = 1;
+	if (zone > this->zone)
+		this->zone = zone;
 }
 
 void Line::removeStation(int code, Direction d)

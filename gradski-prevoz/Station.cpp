@@ -22,8 +22,6 @@ Station::~Station()
 
 void Station::addStationAndLine(Station *s, Line *l, string lineCode)
 {
-	if ((*s).code == 64)
-		cout << "fad";
 	if (stations.find((*s).code) == stations.end())
 		stations[(*s).code] = s;
 	stations[(*s).code]->addLine(l, lineCode);

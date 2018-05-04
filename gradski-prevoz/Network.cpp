@@ -9,6 +9,7 @@ Network::Network()
 
 Network::~Network()
 {
+	lines.clear();
 }
 
 void Network::addLine(Line* l)
@@ -38,7 +39,9 @@ void Network::readLines()
 		while (getline(dir, lineInFile))
 		{
 			Line* line = parseLine(lineInFile);
-			addLine(line);
+			if ((*line).getZone() <= zone)
+				if ((*line).getNumber() > numberMin && (*line).getNumber() < numberMax)
+					addLine(line);
 		}
 		dir.close();
 	}
@@ -56,7 +59,7 @@ void Network::readLine(string code)
 		while (getline(dir, lineInFile))
 		{
 			Line* line = parseLine(lineInFile);
-			if (line->getCode == code)
+			if (line->getCode() == code)
 			{
 				addLine(line);
 				break;
@@ -64,20 +67,25 @@ void Network::readLine(string code)
 		}
 		dir.close();
 	}
-	else cout << "Unable to open file";
+	else cout << "Nije moguce otvoriti fajl";
 }
 
 Line* Network::parseLine(string textLine)
 {
-	regex reg("(.+)!(.+)!(.+)!");
+	regex reg("(([0-9]*)[a-zA-Z]*([0-9]*))!(.+)!(.+)!");
 	smatch result;
 
 	if (regex_match(textLine, result, reg))
 	{
 		string code = result.str(1);
-		string firstStop = result.str(2);
-		string lastStop = result.str(3);
-		Line* line = new Line(code, firstStop, lastStop);
+		int number;
+		if (result.str(3) == "")
+			number = atoi(result.str(2).c_str());
+		else
+			number = atoi(result.str(3).c_str());
+		string firstStop = result.str(4);
+		string lastStop = result.str(5);
+		Line* line = new Line(code, firstStop, lastStop, number);
 		(*line).readStations(Direction::A);
 		(*line).readStations(Direction::B);
 		return line;
@@ -86,6 +94,11 @@ Line* Network::parseLine(string textLine)
 		cout << "No match" << endl;
 		return nullptr;
 	}
+}
+
+void Network::setZone(int zone)
+{
+	this->zone = zone;
 }
 
 ostream & operator<<(ostream & it, const Network n)
