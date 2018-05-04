@@ -41,7 +41,8 @@ void Network::readLines()
 			Line* line = parseLine(lineInFile);
 			if ((*line).getZone() <= zone)
 				if ((*line).getNumber() > numberMin && (*line).getNumber() < numberMax)
-					addLine(line);
+					if ((*line).getNumberOfStations() > minNumberOfStations && (*line).getNumberOfStations() < maxNumberOfStations)
+						addLine(line);
 		}
 		dir.close();
 	}

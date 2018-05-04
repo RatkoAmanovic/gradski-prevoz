@@ -2,6 +2,7 @@
 
 void selectZone(Network *n);
 void filterByNumber(Network *n);
+void filterByNumberOfStations(Network *n);
 
 int main()
 {
@@ -22,6 +23,7 @@ int main()
 		case 1:
 			selectZone(&network);
 			filterByNumber(&network);
+			filterByNumberOfStations(&network);
 			network.readLines();
 			cout << network;
 			network.~Network();
@@ -109,6 +111,41 @@ void filterByNumber(Network *n)
 		n->setNumberMax(number);
 		break;
 	case 4:
+		break;
+	case 0:
+		exit(0);
+		break;
+	default:
+		break;
+	}
+}
+
+void filterByNumberOfStations(Network *n)
+{
+	int control;
+	int number;
+	do {
+		cout << "Filtriranje prema broju stainca?\n";
+		cout << "1. Manje od zadatog broja\n";
+		cout << "2. Vece od zadatog broja\n";
+		cout << "3. Bez filtera\n";
+		cout << "0. Izlaz\n";
+		cin >> control;
+	} while (control < 0 && control>4);
+
+	switch (control)
+	{
+	case 1:
+		cout << "Unesite broj od koga zelite da brojevi linija budu manji\n";
+		cin >> number;
+		n->setMaxNumberOfStations(number);
+		break;
+	case 2:
+		cout << "Unesite broj od koga zelite da brojevi linija budu veci\n";
+		cin >> number;
+		n->setMinNumberOfStations(number);
+		break;
+	case 3:
 		break;
 	case 0:
 		exit(0);

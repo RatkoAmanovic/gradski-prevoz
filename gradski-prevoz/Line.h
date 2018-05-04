@@ -26,6 +26,7 @@ public:
 	inline void setCode(int code) { this->code = code; }
 	inline int getZone() const { return zone; }
 	inline int getNumber() const { return number; }
+	inline int getNumberOfStations() const { return A_firstToLastStation.size() + B_lastToFirstStation.size(); }
 
 private:
 	string code;
