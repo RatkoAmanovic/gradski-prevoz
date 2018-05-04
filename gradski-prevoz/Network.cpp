@@ -1,11 +1,8 @@
 #include "Network.h"
 
-
-
 Network::Network()
 {
 }
-
 
 Network::~Network()
 {
@@ -100,6 +97,26 @@ Line* Network::parseLine(string textLine)
 void Network::setZone(int zone)
 {
 	this->zone = zone;
+}
+
+unordered_set<Line*> Network::getLinesWithMutualStations(string line)
+{
+	unordered_set<Line*> mutualLines;
+	for (auto it = Station::getStationsBegin(); it != Station::getStationsEnd(); ++it)
+	{
+		if(it->second->isInLines(line))
+			for (auto it1 = it->second->getLinesBegin(); it1 != it->second->getLinesEnd(); ++it1)
+			{
+				if (it1->first != line)
+					mutualLines.insert(it1->second);
+			}
+	}
+	for (auto it = mutualLines.begin(); it != mutualLines.end(); ++it)
+	{
+		cout << (*it)->getCode() << " ";
+	}
+	cout << "\n";
+	return mutualLines;
 }
 
 ostream & operator<<(ostream & it, const Network n)

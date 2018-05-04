@@ -1,4 +1,5 @@
 #include "Line.h"
+#include <unordered_set>
 
 Line::Line(string code, string firstStop, string lastStop, int number)
 {
@@ -10,6 +11,7 @@ Line::Line(string code, string firstStop, string lastStop, int number)
 
 Line::~Line()
 {
+	
 }
 
 void Line::addStationAndZone(Station *s, Direction d)
@@ -20,7 +22,6 @@ void Line::addStationAndZone(Station *s, Direction d)
 	if (d==Direction::B)
 		B_lastToFirstStation.push_back(s);
 }
-
 
 void Line::addZone(int zone)
 {
@@ -90,8 +91,6 @@ void Line::readStations(Direction d)
 	}
 	else cout << "Unable to open file";
 }
-
-
 
 Station* Line::parseStation(string line)
 {

@@ -22,6 +22,11 @@ public:
 	void addLine(Line *l, string lineCode);
 	int getZone() { return zone; }
 	int getCode() { return code; }
+	static auto getStationsBegin() { return stations.begin(); }
+	static auto getStationsEnd() { return stations.end(); }
+	auto getLinesBegin() { return lines.begin(); }
+	auto getLinesEnd() { return lines.end(); }
+	bool isInLines(string line) { return lines.find(line) != lines.end(); }
 
 private:
 	int code;

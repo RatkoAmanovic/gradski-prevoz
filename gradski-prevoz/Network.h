@@ -1,4 +1,5 @@
 #include "Line.h"
+#include <unordered_set>
 #ifndef __NETWORK_H_
 #define __NETWORK_H_
 
@@ -20,6 +21,7 @@ public:
 	inline void setNumberMax(int number) { numberMax = number; }
 	inline void setMaxNumberOfStations(int number) { maxNumberOfStations = number; }
 	inline void setMinNumberOfStations(int number) { minNumberOfStations = number; }
+	unordered_set<Line*> getLinesWithMutualStations(string line);
 private:
 	vector<Line*> lines;
 	int zone;

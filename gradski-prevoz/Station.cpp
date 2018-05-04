@@ -4,7 +4,6 @@ unordered_map<int, Station*> Station::stations;
 
 Station::Station(int code, string name, double latitude, double longitude, int zone)
 {
-	
 	this->code = code;
 	this->name = name;
 	location = Location(latitude, longitude);
@@ -27,7 +26,6 @@ void Station::addStationAndLine(Station *s, Line *l, string lineCode)
 	stations[(*s).code]->addLine(l, lineCode);
 		
 }
-
 
 void Station::addLine(Line *l, string lineCode)
 {

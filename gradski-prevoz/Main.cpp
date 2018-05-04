@@ -173,6 +173,7 @@ void groupModeMenu(Network *n)
 {
 	int control;
 	int number;
+	string line;
 	do {
 		groupModeMenuText();
 		cin >> control;
@@ -183,10 +184,10 @@ void groupModeMenu(Network *n)
 	case 1:
 		cout << *n;
 		break;
-	case 2:
-		cout << "Unesite broj od koga zelite da brojevi linija budu veci\n";
-		cin >> number;
-		n->setNumberMin(number);
+	case 2://Odredjivanje skupa linija sa kojima data linija ima zajednicka stajalista(bez obzira na smer kretanja)
+		cout << "Unesite sifru linije, velikim slovima slova\n";
+		cin >> line;
+		n->getLinesWithMutualStations(line);
 		break;
 	case 3:
 		cout << "Unesite broj od koga zelite da brojevi linija budu veci\n";
