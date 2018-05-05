@@ -188,7 +188,7 @@ void groupModeMenu(Network *n)
 	string line;
 	Station *s;
 	unordered_map<pair<string, string>, int, Network::pair_hash> map;
-
+	unordered_set<Line *> mutualLines;
 	do {
 		groupModeMenuText();
 		cin >> control;
@@ -202,7 +202,11 @@ void groupModeMenu(Network *n)
 	case 2://Odredjivanje skupa linija sa kojima data linija ima zajednicka stajalista(bez obzira na smer kretanja)
 		cout << "Unesite sifru linije, velikim slovima slova\n";
 		cin >> line;
-		n->getLinesWithMutualStations(line);
+		mutualLines =  n->getLinesWithMutualStations(line);
+		for (auto it = mutualLines.begin(); it != mutualLines.end(); ++it)
+		{
+			cout << (*it)->getCode() << " ";
+		}
 		cout << "\n";
 		break;
 	case 3://Odredjivanje da li data linija prolazi kroz zadata dva stajalista u istom smeru svog kretanja
@@ -238,8 +242,18 @@ void groupModeMenu(Network *n)
 			cout << it->first << " ";
 		cout << "\n";
 		break;
-	case 8:
+	case 8://Odredjivanje svih stajalista do kojih je moguce stici iz zadatog stajalista uz voznju maksimalno jednu stanicu
 		stations1DistanceAway(n);
+		break;
+	case 9://Odredjivanje najmanjeg potrebnog broja presedanja na putu izmedju dva zadata stajalista
+		cout << "Unesite sifru prvog stajalista\n";
+		cin >> number;
+		cout << "Unesite sifru drugog stajalista\n";
+		cin >> number2;
+		cout << "Najmanji broj presedanja je: " << n->leastTransfersBetweenStations(number, number2) << "\n";
+		break;
+	case 10://Odredjivanje najkraceg puta izmedju dva stajalista(ne uzimati u obzir geografsku lokaciju,\n    vec za najkraci put uzeti onaj koji se sastoji od najmanjeg broja stajalista)
+
 		break;
 	case 0:
 		exit(0);

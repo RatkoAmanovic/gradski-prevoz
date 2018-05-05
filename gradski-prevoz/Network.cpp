@@ -111,11 +111,6 @@ unordered_set<Line*> Network::getLinesWithMutualStations(string line)
 					mutualLines.insert(it1->second);
 			}
 	}
-	for (auto it = mutualLines.begin(); it != mutualLines.end(); ++it)
-	{
-		cout << (*it)->getCode() << " ";
-	}
-	cout << "\n";
 	return mutualLines;
 }
 
@@ -132,6 +127,24 @@ bool Network::areStationsOnSameLineAndDirection(string line, int station1, int s
 			return true;
 	if (lineObj.isStationOnLine(station1, Direction::B))
 		if (lineObj.isStationOnLine(station2, Direction::B))
+			return true;
+
+	return false;
+}
+
+bool Network::areStationsOnSameLine(string line, int station1, int station2)
+{
+	int index;
+	auto it = find_if(lines.begin(), lines.end(), [line](Line* lin) {return (*lin).getCode() == line; });
+	if (it != lines.end())
+		index = distance(lines.begin(), it);
+	Line lineObj = *lines[index];
+
+	if (lineObj.isStationOnLine(station1, Direction::A))
+		if (lineObj.isStationOnLine(station2, Direction::A)|| lineObj.isStationOnLine(station2, Direction::B))
+			return true;
+	if (lineObj.isStationOnLine(station1, Direction::B))
+		if (lineObj.isStationOnLine(station2, Direction::B)|| lineObj.isStationOnLine(station2, Direction::A))
 			return true;
 
 	return false;
@@ -266,6 +279,46 @@ unordered_map<pair<string, string>,int, Network::pair_hash> Network::numberOfMut
 	for (auto m : linePairs)
 		cout << m.first.first << " " << m.first.second << " " << m.second << "\n";
 	return linePairs;
+}
+
+int Network::leastTransfersBetweenStations(int station1, int station2)
+{
+	Station* start = Station::getStation(station1);
+	Station* finish = Station::getStation(station2);
+	unordered_set<string> visitedLines;
+	vector<string> finishLines;
+	vector<Line *> lines;
+	for (auto l : lines)
+		if (areStationsOnSameLine((*l).getCode(), station1, station2))
+			return 0;
+	queue<pair<Line *, int>> q;
+
+	for (auto it = finish->getLinesBegin(); it != finish->getLinesEnd(); ++it)
+		finishLines.push_back(it->second->getCode());
+	for (auto it = start->getLinesBegin(); it != start->getLinesEnd(); ++it)
+	{
+		q.push(make_pair(it->second, 0));
+		visitedLines.insert(it->second->getCode());
+	}
+	while (!q.empty())
+	{
+		pair<Line*, int> temp = q.front();
+		q.pop();
+		int depth = temp.second + 1;
+		Line *l = temp.first;
+		for (auto fL : finishLines)
+			if (l->getCode() == fL)
+				return temp.second;
+		unordered_set<Line *> childLines = getLinesWithMutualStations(l->getCode());
+		for (auto it = childLines.begin(); it != childLines.end(); ++it)
+		{
+			if (visitedLines.find((*it)->getCode()) == visitedLines.end())
+			{
+				q.push(make_pair(*it, depth));
+				visitedLines.insert((*it)->getCode());
+			}
+		}
+	}
 }
 
 ostream & operator<<(ostream & it, const Network n)
