@@ -1,5 +1,6 @@
 #include "Network.h"
 
+
 void selectZone(Network *n);
 void filterByNumber(Network *n);
 void filterByNumberOfStations(Network *n);
@@ -9,6 +10,11 @@ void groupModeMenu(Network *n);
 void groupModeMenuText();
 void closestStation(Network* n);
 void stations1DistanceAway(Network *n);
+
+
+
+
+
 
 int main()
 {
@@ -179,10 +185,10 @@ void groupModeMenu(Network *n)
 	int control;
 	int number;
 	int number2;
-	double latitude;
-	double longitude;
 	string line;
 	Station *s;
+	unordered_map<pair<string, string>, int, Network::pair_hash> map;
+
 	do {
 		groupModeMenuText();
 		cin >> control;
@@ -222,6 +228,7 @@ void groupModeMenu(Network *n)
 		break;
 	case 6://Odredjivanje broja zajednickih stajalista za sve parove linija koje imaju zajednicko stajaliste,
 		   //uz mogucnost filtriranja na parove linija koje imaju zajednickih stajalista vise od zadatog broja
+		n->numberOfMutualStationsForAllLines();
 		break;
 	case 7://Odredjivanje svih linija koje prolaze kroz dato stajaliste
 		cout << "Unesite sifru stajalista\n";
@@ -284,32 +291,7 @@ void stations1DistanceAway(Network *n)
 	int number;
 	cout << "Unesite sifru stajalista\n";
 	cin >> number;
-	Station *s = Station::getStation(number);
-	for (auto it = s->getLinesBegin(); it != s->getLinesEnd(); ++it)
-	{
-		if (it->second->isStationOnLine(number, Direction::A))
-		{
-			for (auto it1 = it->second->getA_firstBegin(); it1 != it->second->getA_firstEnd(); ++it1)
-			{
-				if ((*it1)->getCode() == number)
-				{
-					++it1;
-					cout << *(*it1) << "\n";
-					break;
-				}
-			}
-		}
-		else
-		{
-			for (auto it1 = it->second->getB_lastBegin(); it1 != it->second->getB_lastEnd(); ++it1)
-			{
-				if ((*it1)->getCode() == number)
-				{
-					++it1;
-					cout << *(*it1) << "\n";
-					break;
-				}
-			}
-		}
-	}
+	unordered_map<int,Station*> s = n->stations1DistnaceAway(number);
+	for (auto st : s)
+		cout << *(st.second) << "\n";
 }

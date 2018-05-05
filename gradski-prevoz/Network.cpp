@@ -199,6 +199,75 @@ Station * Network::closestStation(double latitude, double longitude, string line
 	}
 }
 
+unordered_map<int,Station*> Network::stations1DistnaceAway(int station)
+{
+	unordered_map<int,Station*> stations;
+	Station *s = Station::getStation(station);
+	for (auto it = s->getLinesBegin(); it != s->getLinesEnd(); ++it)
+	{
+		if (it->second->isStationOnLine(station, Direction::A))
+		{
+			for (auto it1 = it->second->getA_firstBegin(); it1 != it->second->getA_firstEnd(); ++it1)
+			{
+				if ((*it1)->getCode() == station)
+				{
+					++it1;
+					if (it1 != it->second->getA_firstEnd())
+						stations[(*it1)->getCode()] = (*it1);
+					break;
+				}
+			}
+		}
+		else
+		{
+			for (auto it1 = it->second->getB_lastBegin(); it1 != it->second->getB_lastEnd(); ++it1)
+			{
+				if ((*it1)->getCode() == station)
+				{
+					++it1;
+					if(it1!=it->second->getB_lastEnd())
+						stations[(*it1)->getCode()] = (*it1);
+					break;
+				}
+			}
+		}
+	}
+	return stations;
+}
+
+unordered_map<pair<string, string>,int, Network::pair_hash> Network::numberOfMutualStationsForAllLines()
+{
+	unordered_map<pair<string, string>, int, pair_hash> linePairs;
+	for (auto it = Station::getStationsBegin(); it != Station::getStationsEnd(); ++it)
+	{
+		for (auto it1 = it->second->getLinesBegin(); it1 != it->second->getLinesEnd(); ++it1)
+		{
+			for (auto it2 = it->second->getLinesBegin(); it2 != it->second->getLinesEnd(); ++it2)
+			{
+
+				string line1 = it1->second->getCode();
+				string line2 = it2->second->getCode();
+				bool write = line1 < line2;
+				if (line1 < line2)
+					swap(line1, line2);
+				pair<string, string> pairOfLines(line1, line2);
+				if (write)
+				{
+					int &value = linePairs[pairOfLines];
+					if (value)
+						linePairs[pairOfLines] += 1;
+					else
+						linePairs[pairOfLines] = 1;
+				}
+			}
+		}
+	}
+
+	for (auto m : linePairs)
+		cout << m.first.first << " " << m.first.second << " " << m.second << "\n";
+	return linePairs;
+}
+
 ostream & operator<<(ostream & it, const Network n)
 {
 	for (Line* l : n.lines)
@@ -207,3 +276,4 @@ ostream & operator<<(ostream & it, const Network n)
 	}
 	return it;
 }
+
