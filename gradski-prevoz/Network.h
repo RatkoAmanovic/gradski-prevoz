@@ -42,6 +42,7 @@ public:
 	unordered_map<int, Station*> stations1DistnaceAway(int station);
 	unordered_map<pair<string, string>, int, pair_hash> numberOfMutualStationsForAllLines();
 	int leastTransfersBetweenStations(int station1, int station2);
+	int leastNumberOfStationsBetweenStations(int station1, int station2);
 private:
 	vector<Line*> lines;
 	int zone;

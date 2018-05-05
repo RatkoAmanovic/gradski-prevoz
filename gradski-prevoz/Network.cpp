@@ -321,6 +321,40 @@ int Network::leastTransfersBetweenStations(int station1, int station2)
 	}
 }
 
+int Network::leastNumberOfStationsBetweenStations(int station1, int station2)
+{
+	Station* start = Station::getStation(station1);
+	Station* finish = Station::getStation(station2);
+	unordered_set<int> visitedStations;
+	if (station1 == station2)
+		return 0;
+	queue<pair<Station*, int>> q;
+	unordered_map<int, Station*> s = stations1DistnaceAway(station1);
+	for (auto it = s.begin(); it != s.end(); ++it)
+	{
+		q.push(make_pair(it->second, 0));
+		visitedStations.insert(it->second->getCode());
+	}
+	while (!q.empty())
+	{
+		pair<Station*, int> temp = q.front();
+		q.pop();
+		int depth = temp.second + 1;
+		Station *s = temp.first;
+		if (s->getCode() == station2)
+			return temp.second;
+		unordered_map<int, Station*> childStations = stations1DistnaceAway(station1);
+		for (auto it = childStations.begin(); it != childStations.end(); ++it)
+		{
+			if (visitedStations.find(it->second->getCode()) == visitedStations.end())
+			{
+				q.push(make_pair(it->second, depth));
+				visitedStations.insert(it->second->getCode());
+			}
+		}
+	}
+}
+
 ostream & operator<<(ostream & it, const Network n)
 {
 	for (Line* l : n.lines)

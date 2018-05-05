@@ -253,7 +253,11 @@ void groupModeMenu(Network *n)
 		cout << "Najmanji broj presedanja je: " << n->leastTransfersBetweenStations(number, number2) << "\n";
 		break;
 	case 10://Odredjivanje najkraceg puta izmedju dva stajalista(ne uzimati u obzir geografsku lokaciju,\n    vec za najkraci put uzeti onaj koji se sastoji od najmanjeg broja stajalista)
-
+		cout << "Unesite sifru prvog stajalista\n";
+		cin >> number;
+		cout << "Unesite sifru drugog stajalista\n";
+		cin >> number2;
+		cout << "Najmanji broj stajalista je: " << n->leastTransfersBetweenStations(number, number2) << "\n";
 		break;
 	case 0:
 		exit(0);
