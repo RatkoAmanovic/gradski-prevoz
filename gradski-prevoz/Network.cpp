@@ -343,7 +343,7 @@ int Network::leastNumberOfStationsBetweenStations(int station1, int station2)
 		Station *s = temp.first;
 		if (s->getCode() == station2)
 			return temp.second;
-		unordered_map<int, Station*> childStations = stations1DistnaceAway(station1);
+		unordered_map<int, Station*> childStations = stations1DistnaceAway(s->getCode());
 		for (auto it = childStations.begin(); it != childStations.end(); ++it)
 		{
 			if (visitedStations.find(it->second->getCode()) == visitedStations.end())
@@ -353,6 +353,7 @@ int Network::leastNumberOfStationsBetweenStations(int station1, int station2)
 			}
 		}
 	}
+	return -1;
 }
 
 ostream & operator<<(ostream & it, const Network n)

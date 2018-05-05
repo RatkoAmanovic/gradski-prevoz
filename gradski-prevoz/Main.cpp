@@ -257,7 +257,7 @@ void groupModeMenu(Network *n)
 		cin >> number;
 		cout << "Unesite sifru drugog stajalista\n";
 		cin >> number2;
-		cout << "Najmanji broj stajalista je: " << n->leastTransfersBetweenStations(number, number2) << "\n";
+		cout << "Najmanji broj stajalista je: " << n->leastNumberOfStationsBetweenStations(number, number2) << "\n";
 		break;
 	case 0:
 		exit(0);
