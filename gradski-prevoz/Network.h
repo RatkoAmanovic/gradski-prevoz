@@ -24,7 +24,7 @@ public:
 	Network();
 	~Network();
 	void addLine(Line* l);
-	void removeLine(Line* l);
+	void removeLine(string line);
 	void readLines();
 	void readLine(string code);
 	Line* parseLine(string line);
@@ -45,6 +45,7 @@ public:
 	int leastNumberOfStationsBetweenStations(int station1, int station2);
 	auto getLinesBegin() { return lines.begin(); }
 	auto getLinesEnd() { return lines.end(); }
+	Line* getLine(string line);
 private:
 	vector<Line*> lines;
 	int zone;

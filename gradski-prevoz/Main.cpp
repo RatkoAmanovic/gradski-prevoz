@@ -1,6 +1,6 @@
 #include "Network.h"
 #include "Generator.h"
-
+#include "ClearScreen.h"
 
 void selectZone(Network *n);
 void filterByNumber(Network *n);
@@ -13,7 +13,9 @@ void closestStation(Network* n);
 void stations1DistanceAway(Network *n);
 void graphGenerating(Network *n);
 void graphGeneratingText();
-
+void lineManipulation(Network* n);
+void lineManipulationText();
+void exitProgram(Network *n);
 
 bool graphGenerated = false;
 
@@ -42,7 +44,7 @@ int main()
 			network.~Network();
 			break;
 		case 0:
-			exit(0);
+			exitProgram(&network);
 		default:
 			break;
 		}
@@ -77,7 +79,7 @@ void selectZone(Network *n)
 		n->setZone(4);
 		break;
 	case 0:
-		exit(0);
+		exitProgram(n);
 		break;
 	default:
 		break;
@@ -121,7 +123,7 @@ void filterByNumber(Network *n)
 	case 4:
 		break;
 	case 0:
-		exit(0);
+		exitProgram(n);
 		break;
 	default:
 		break;
@@ -156,7 +158,7 @@ void filterByNumberOfStations(Network *n)
 	case 3:
 		break;
 	case 0:
-		exit(0);
+		exitProgram(n);
 		break;
 	default:
 		break;
@@ -172,9 +174,15 @@ void mainMenu() {
 
 void groupMode(Network *n)
 {
+	clearScreen();
 	selectZone(n);
+
+	clearScreen();
 	filterByNumber(n);
+
+	clearScreen();
 	filterByNumberOfStations(n);
+
 	(*n).readLines();
 	while (1) {
 		groupModeMenu(n);
@@ -201,6 +209,8 @@ void groupModeMenu(Network *n)
 	{
 	case 1:
 		cout << *n;
+		cout << "Unestite bilo koji broj da bi ste nastavili sa radom\n";
+		cin >> number;
 		break;
 	case 2://Odredjivanje skupa linija sa kojima data linija ima zajednicka stajalista(bez obzira na smer kretanja)
 		cout << "Unesite sifru linije, velikim slovima slova\n";
@@ -272,15 +282,11 @@ void groupModeMenu(Network *n)
 	case 11:
 		graphGenerating(n);
 		break;
+	case 12:
+		lineManipulation(n);
+		break;
 	case 0:
-		if (!graphGenerated)
-		{
-			cout << "Niste izgenerisali graf, ako to zelite pritisnite 1, ako ne 0\n";
-			cin >> number;
-			if (number == 1)
-				graphGenerating(n);
-		}
-		exit(0);
+		exitProgram(n);
 		break;
 	default:
 		break;
@@ -289,6 +295,7 @@ void groupModeMenu(Network *n)
 
 void groupModeMenuText()
 {
+	clearScreen();
 	cout << "Izaberite aktivnost koju zelite da izvrsite!\n";
 	cout << "1.  Stampanje mreze\n";
 	cout << "2.  Odredjivanje skupa linija sa kojima data linija ima zajednicka stajalista(bez obzira na smer kretanja)\n";
@@ -301,6 +308,7 @@ void groupModeMenuText()
 	cout << "9.  Odredjivanje najmanjeg potrebnog broja presedanja na putu izmedju dva zadata stajalista\n";
 	cout << "10. Odredjivanje najkraceg puta izmedju dva stajalista(ne uzimati u obzir geografsku lokaciju,\n    vec za najkraci put uzeti onaj koji se sastoji od najmanjeg broja stajalista)\n";
 	cout << "11. Generisanje grafovskih fajlova\n";
+	cout << "12. Manipulacija nad linijama\n";
 	cout << "0.  Izlaz\n";
 }
 
@@ -365,14 +373,7 @@ void graphGenerating(Network *n)
 		graphGenerated = true;
 		break;
 	case 0:
-		if (!graphGenerated)
-		{
-			cout << "Niste izgenerisali graf, ako to zelite pritisnite 1, ako ne 0\n";
-			cin >> number;
-			if (number == 1)
-				graphGenerating(n);
-		}
-		exit(0);
+		exitProgram(n);
 	default:
 		break;
 	}
@@ -380,8 +381,99 @@ void graphGenerating(Network *n)
 
 void graphGeneratingText()
 {
+	clearScreen();
 	cout << "Izaberite koji tip grafa zelite da izgenerisete\n";
 	cout << "1. L-model(Stajalista cvorovi, linije grane)\n";
 	cout << "2. C-model(Linije cvorovi, zajednicka stajalista grane)\n";
 	cout << "0. Izlaz\n";
+}
+
+void lineManipulation(Network *n) {
+	string line;
+	string code;
+	int control;
+	int number;
+	int number2;
+	int number3;
+	Station * s;
+	cout << "Unesite sifru linije koju zelite da menjate\n";
+	cin >> line;
+	Line *l = n->getLine(line);
+	do {
+		lineManipulationText();
+		cin >> control;
+	} while (control < 0 && control>5);
+
+	switch (control)
+	{
+	case 1://Prikaz linije
+		cout << *l << "\n";
+		cout << "Unesite bilo koji broj da nastavite\n";
+		cin >> number;
+		break;
+	case 2://Obrisi liniju
+		n->removeLine(line);
+		graphGenerated = false;
+		break;
+	case 3://Izmeni oznaku
+		cout << "Unesite oznaku koju zelite da postavite\n";
+		cin >> code;
+		l->setCode(code);
+		graphGenerated = false;
+		break;
+	case 4://Brisanje stajalista
+		cout << "Unesite sifru stajalista koje zelite da obrisete\n";
+		cin >> number;
+		l->removeStation(number);
+		graphGenerated = false;
+		break;
+	case 5://Dodavanje stajalista
+		cout << "Unesite sifru stajalista koje zelite da dodate\n";
+		cin >> number;
+		s = Station::getStation(number);
+		cout << "Unesite lokaciju u nizu u koju zelite da upisete stajaliste\n";
+		cin >> number2;
+		cout << "Unesite 1 za smer A, unesite 2 za smer B\n";
+		cin >> number;
+		if (number == 1)
+			l->addStationToLocation(s, Direction::A, number2);
+		if (number == 2)
+			l->addStationToLocation(s, Direction::B, number2);
+		graphGenerated = false;
+		break;
+	case 0:
+		exitProgram(n);
+		break;
+	default:
+		break;
+	}
+}
+
+void lineManipulationText()
+{
+	clearScreen();
+	cout << "Izaberite koju funkciju zelite da izvrsite\n";
+	cout << "1. Prikaz linije\n";
+	cout << "2. Obrisi liniju\n";
+	cout << "3. Izmeni oznaku\n";
+	cout << "4. Brisanje stajalista\n";
+	cout << "5. Dodavanje stajalista\n"; 
+	cout << "0. Izlaz\n";
+}
+
+void exitProgram(Network *n)
+{
+	int number;
+	if (!graphGenerated)
+	{
+		cout << "Niste izgenerisali graf, ako to zelite pritisnite 1, ako ne 0\n";
+		cin >> number;
+		if (number == 1)
+			graphGenerating(n);
+	}
+	cout << "Da li ste sigurni da zelite da izadjete\n1.DA\n2.NE";
+	cin >> number;
+	if (number == 2)
+		return;
+	exit(0);
 }

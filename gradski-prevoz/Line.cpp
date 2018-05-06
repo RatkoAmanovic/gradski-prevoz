@@ -34,35 +34,30 @@ void Line::addZone(int zone)
 		this->zone = zone;
 }
 
-void Line::removeStation(int code, Direction d)
+void Line::removeStation(int code)
 {
-	if (d == Direction::A)
+	int i = 0;
+	for (Station* s : A_firstToLastStation)
 	{
-		int i = 0;
-		for (Station* s : A_firstToLastStation)
+		if (code == (*s).getCode())
 		{
-			if (code == (*s).getCode())
-			{
-				A_firstToLastStation.erase(A_firstToLastStation.begin() + i);
-				return;
-			}
-			i++;
+			A_firstToLastStation.erase(A_firstToLastStation.begin() + i);
+			return;
 		}
+		i++;
 	}
-
-	if (d == Direction::B)
+	i = 0;
+	for (Station* s : B_lastToFirstStation)
 	{
-		int i = 0;
-		for (Station* s : B_lastToFirstStation)
+		if (code == (*s).getCode())
 		{
-			if (code == (*s).getCode())
-			{
-				B_lastToFirstStation.erase(B_lastToFirstStation.begin() + i);
-				return;
-			}
-			i++;
+			B_lastToFirstStation.erase(B_lastToFirstStation.begin() + i);
+			return;
 		}
+		i++;
 	}
+	cout << "Trazeno stajaliste ne postoji\n";
+	return;
 }
 
 void Line::addStationToLocation(Station * s, Direction d, int location)

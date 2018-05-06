@@ -14,12 +14,12 @@ void Network::addLine(Line* l)
 	lines.push_back(l);
 }
 
-void Network::removeLine(Line * l)
+void Network::removeLine(string line)
 {
 	int i = 0;
-	for (Line* line : lines)
+	for (auto l : lines)
 	{
-		if (l == line)
+		if (l->getCode() == line)
 			lines.erase(lines.begin() + i);
 		i++;
 	}
@@ -329,6 +329,7 @@ int Network::leastTransfersBetweenStations(int station1, int station2)
 			}
 		}
 	}
+	return -1;
 }
 
 int Network::leastNumberOfStationsBetweenStations(int station1, int station2)
@@ -369,6 +370,14 @@ int Network::leastNumberOfStationsBetweenStations(int station1, int station2)
 		}
 	}
 	return -1;
+}
+
+Line * Network::getLine(string line)
+{
+	for (auto it = lines.begin(); it != lines.end(); ++it)
+		if ((*it)->getCode() == line)
+			return *it;
+	return nullptr;
 }
 
 ostream & operator<<(ostream & it, const Network n)

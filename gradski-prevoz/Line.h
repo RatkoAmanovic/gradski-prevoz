@@ -21,9 +21,9 @@ public:
 	Station* parseStation(string line);
 	inline string getCode() const { return code; }
 	void addZone(int zone);
-	void removeStation(int code, Direction d);
+	void removeStation(int code);
 	void addStationToLocation(Station *s, Direction d, int location);
-	inline void setCode(int code) { this->code = code; }
+	inline void setCode(string code) { this->code = code; }
 	inline int getZone() const { return zone; }
 	inline int getNumber() const { return number; }
 	inline int getNumberOfStations() const { return A_firstToLastStation.size() + B_lastToFirstStation.size(); }
