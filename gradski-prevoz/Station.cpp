@@ -17,6 +17,12 @@ Station::Station(int code, string name, double latitude, double longitude, int z
 
 Station::~Station()
 {
+	for (auto it = stations.begin(); it != stations.end(); ++it)
+		delete it->second;
+	stations.clear();
+	for (auto it = lines.begin(); it != lines.end(); ++it)
+		delete it->second;
+	lines.clear();
 }
 
 void Station::addStationAndLine(Station *s, Line *l, string lineCode)

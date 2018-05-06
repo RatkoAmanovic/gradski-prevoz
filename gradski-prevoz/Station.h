@@ -29,6 +29,7 @@ public:
 	bool isInLines(string line) { return lines.find(line) != lines.end(); }
 	double getStationLatitude() { return location.getLatitude(); }
 	double getStationLongitude() { return location.getLongitude(); }
+	string getStationName() { return name; }
 
 private:
 	int code;

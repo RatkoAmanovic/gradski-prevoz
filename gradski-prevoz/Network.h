@@ -43,6 +43,8 @@ public:
 	unordered_map<pair<string, string>, int, pair_hash> numberOfMutualStationsForAllLines();
 	int leastTransfersBetweenStations(int station1, int station2);
 	int leastNumberOfStationsBetweenStations(int station1, int station2);
+	auto getLinesBegin() { return lines.begin(); }
+	auto getLinesEnd() { return lines.end(); }
 private:
 	vector<Line*> lines;
 	int zone;

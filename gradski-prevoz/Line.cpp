@@ -11,7 +11,12 @@ Line::Line(string code, string firstStop, string lastStop, int number)
 
 Line::~Line()
 {
-	
+	for (auto it = A_firstToLastStation.begin(); it != A_firstToLastStation.end(); ++it)
+		delete *it;
+	for (auto it = B_lastToFirstStation.begin(); it != B_lastToFirstStation.end(); ++it)
+		delete *it;
+	A_firstToLastStation.clear();
+	B_lastToFirstStation.clear();	
 }
 
 void Line::addStationAndZone(Station *s, Direction d)

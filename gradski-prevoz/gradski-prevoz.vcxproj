@@ -119,6 +119,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Generator.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -126,6 +127,7 @@
     <ClCompile Include="Station.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Generator.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="Network.h" />

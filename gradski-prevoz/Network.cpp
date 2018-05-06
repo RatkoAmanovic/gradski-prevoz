@@ -216,6 +216,11 @@ unordered_map<int,Station*> Network::stations1DistnaceAway(int station)
 {
 	unordered_map<int,Station*> stations;
 	Station *s = Station::getStation(station);
+	if (s == nullptr)
+	{
+		cout << "Stajaliste ne postoji\n";
+		return stations;
+	}
 	for (auto it = s->getLinesBegin(); it != s->getLinesEnd(); ++it)
 	{
 		if (it->second->isStationOnLine(station, Direction::A))
@@ -285,6 +290,11 @@ int Network::leastTransfersBetweenStations(int station1, int station2)
 {
 	Station* start = Station::getStation(station1);
 	Station* finish = Station::getStation(station2);
+	if (start == nullptr || finish == nullptr)
+	{
+		cout << "Stajaliste ne postoji\n";
+		return -1;
+	}
 	unordered_set<string> visitedLines;
 	vector<string> finishLines;
 	vector<Line *> lines;
@@ -325,6 +335,11 @@ int Network::leastNumberOfStationsBetweenStations(int station1, int station2)
 {
 	Station* start = Station::getStation(station1);
 	Station* finish = Station::getStation(station2);
+	if (start == nullptr || finish == nullptr)
+	{
+		cout << "Stajaliste ne postoji\n";
+		return -1;
+	}
 	unordered_set<int> visitedStations;
 	if (station1 == station2)
 		return 0;

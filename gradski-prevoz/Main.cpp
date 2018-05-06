@@ -1,4 +1,5 @@
 #include "Network.h"
+#include "Generator.h"
 
 
 void selectZone(Network *n);
@@ -10,11 +11,11 @@ void groupModeMenu(Network *n);
 void groupModeMenuText();
 void closestStation(Network* n);
 void stations1DistanceAway(Network *n);
+void graphGenerating(Network *n);
+void graphGeneratingText();
 
 
-
-
-
+bool graphGenerated = false;
 
 int main()
 {
@@ -37,6 +38,8 @@ int main()
 			cout << "Unesite koju liniju zelite da pregledate\n";
 			cin >> line;
 			network.readLine(line);
+			cout << network;
+			network.~Network();
 			break;
 		case 0:
 			exit(0);
@@ -192,7 +195,7 @@ void groupModeMenu(Network *n)
 	do {
 		groupModeMenuText();
 		cin >> control;
-	} while (control < 0 && control>10);
+	} while (control < 0 && control>11);
 
 	switch (control)
 	{
@@ -238,9 +241,16 @@ void groupModeMenu(Network *n)
 		cout << "Unesite sifru stajalista\n";
 		cin >> number;
 		s = Station::getStation(number);
-		for (auto it = s->getLinesBegin(); it != s->getLinesEnd(); ++it)
-			cout << it->first << " ";
-		cout << "\n";
+		if (s != nullptr)
+		{
+			for (auto it = s->getLinesBegin(); it != s->getLinesEnd(); ++it)
+				cout << it->first << " ";
+			cout << "\n";
+		}
+		else
+		{
+			cout << "To stajaliste ne postoji\n";
+		}
 		break;
 	case 8://Odredjivanje svih stajalista do kojih je moguce stici iz zadatog stajalista uz voznju maksimalno jednu stanicu
 		stations1DistanceAway(n);
@@ -259,7 +269,17 @@ void groupModeMenu(Network *n)
 		cin >> number2;
 		cout << "Najmanji broj stajalista je: " << n->leastNumberOfStationsBetweenStations(number, number2) << "\n";
 		break;
+	case 11:
+		graphGenerating(n);
+		break;
 	case 0:
+		if (!graphGenerated)
+		{
+			cout << "Niste izgenerisali graf, ako to zelite pritisnite 1, ako ne 0\n";
+			cin >> number;
+			if (number == 1)
+				graphGenerating(n);
+		}
 		exit(0);
 		break;
 	default:
@@ -280,6 +300,7 @@ void groupModeMenuText()
 	cout << "8.  Odredjivanje svih stajalista do kojih je moguce stici iz zadatog stajalista uz voznju maksimalno jednu stanicu\n";
 	cout << "9.  Odredjivanje najmanjeg potrebnog broja presedanja na putu izmedju dva zadata stajalista\n";
 	cout << "10. Odredjivanje najkraceg puta izmedju dva stajalista(ne uzimati u obzir geografsku lokaciju,\n    vec za najkraci put uzeti onaj koji se sastoji od najmanjeg broja stajalista)\n";
+	cout << "11. Generisanje grafovskih fajlova\n";
 	cout << "0.  Izlaz\n";
 }
 
@@ -312,4 +333,55 @@ void stations1DistanceAway(Network *n)
 	unordered_map<int,Station*> s = n->stations1DistnaceAway(number);
 	for (auto st : s)
 		cout << *(st.second) << "\n";
+}
+
+void graphGenerating(Network *n)
+{	
+	int control;
+	int number;
+	do {
+		graphGeneratingText();
+		cin >> control;
+	} while (control < 0 && control>2);
+
+	switch (control)
+	{
+	case 1://L-model
+		cout << "Za generisanje GML grafa pritisnite 1, a za CSV pritisnite 2\n";
+		cin >> number;
+		if (number == 1)
+			Generator::generateGML_LTypeGraph(n);
+		if (number == 2)
+			Generator::generateCSV_LTypeGraph(n);
+		graphGenerated = true;
+		break;
+	case 2://C-model
+		cout << "Za generisanje GML grafa pritisnite 1, a za CSV pritisnite 2\n";
+		cin >> number;
+		if (number == 1)
+			Generator::generateGML_CTypeGraph(n);
+		if (number == 2)
+			Generator::generateCSV_CTypeGraph(n);
+		graphGenerated = true;
+		break;
+	case 0:
+		if (!graphGenerated)
+		{
+			cout << "Niste izgenerisali graf, ako to zelite pritisnite 1, ako ne 0\n";
+			cin >> number;
+			if (number == 1)
+				graphGenerating(n);
+		}
+		exit(0);
+	default:
+		break;
+	}
+}
+
+void graphGeneratingText()
+{
+	cout << "Izaberite koji tip grafa zelite da izgenerisete\n";
+	cout << "1. L-model(Stajalista cvorovi, linije grane)\n";
+	cout << "2. C-model(Linije cvorovi, zajednicka stajalista grane)\n";
+	cout << "0. Izlaz\n";
 }
