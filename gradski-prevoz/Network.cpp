@@ -6,6 +6,21 @@ Network::Network()
 
 Network::~Network()
 {
+	for (auto it = Station::getStationsBegin(); it != Station::getStationsEnd(); ++it)
+	{
+		
+		for (auto it1 = it->second->getLinesBegin(); it1 != it->second->getLinesEnd(); ++it1)
+			delete it->second;
+		delete it->second;
+	}
+	for (auto it = lines.begin(); it != lines.end(); ++it)
+	{
+		delete *it;
+		for (auto it1 = (*it)->getA_firstBegin(); it1 != (*it)->getA_firstEnd(); ++it1)
+			delete *it1;
+		for (auto it1 = (*it)->getB_lastBegin(); it1 != (*it)->getB_lastEnd(); ++it1)
+			delete *it1;
+	}
 	lines.clear();
 }
 
@@ -117,6 +132,11 @@ unordered_set<Line*> Network::getLinesWithMutualStations(string line)
 bool Network::areStationsOnSameLineAndDirection(string line, int station1, int station2)
 {
 	int index;
+	if (getLine(line) == nullptr)
+	{
+		cout << "Linija ne postoji";
+		return false;
+	}
 	auto it = find_if(lines.begin(), lines.end(), [line](Line* lin) {return (*lin).getCode() == line; });
 	if (it != lines.end())
 		index = distance(lines.begin(), it);

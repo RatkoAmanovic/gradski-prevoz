@@ -11,12 +11,6 @@ Line::Line(string code, string firstStop, string lastStop, int number)
 
 Line::~Line()
 {
-	for (auto it = A_firstToLastStation.begin(); it != A_firstToLastStation.end(); ++it)
-		delete *it;
-	for (auto it = B_lastToFirstStation.begin(); it != B_lastToFirstStation.end(); ++it)
-		delete *it;
-	A_firstToLastStation.clear();
-	B_lastToFirstStation.clear();	
 }
 
 void Line::addStationAndZone(Station *s, Direction d)
@@ -134,6 +128,11 @@ Station* Line::parseStation(string line)
 
 ostream & operator<<(ostream & it, const Line & l)
 {
+	if (&l == nullptr)
+	{
+		cout << "Linija ne postoji";
+		return it;
+	}
 	it << "Linija: " << l.code;
 	it << " Pocetno stajaliste: " << l.firstStop;
 	it << " Poslednje stajaliste: " << l.lastStop;

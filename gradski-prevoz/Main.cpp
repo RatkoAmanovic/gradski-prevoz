@@ -16,6 +16,7 @@ void graphGeneratingText();
 void lineManipulation(Network* n);
 void lineManipulationText();
 void exitProgram(Network *n);
+void pauseScreen();
 
 bool graphGenerated = false;
 
@@ -41,6 +42,7 @@ int main()
 			cin >> line;
 			network.readLine(line);
 			cout << network;
+			pauseScreen();
 			network.~Network();
 			break;
 		case 0:
@@ -221,6 +223,7 @@ void groupModeMenu(Network *n)
 			cout << (*it)->getCode() << " ";
 		}
 		cout << "\n";
+		pauseScreen();
 		break;
 	case 3://Odredjivanje da li data linija prolazi kroz zadata dva stajalista u istom smeru svog kretanja
 		cout << "Unesite sifru linije, velikim slovima\n";
@@ -233,19 +236,23 @@ void groupModeMenu(Network *n)
 			cout << "Jesu\n";
 		else
 			cout << "Nisu\n";
+		pauseScreen();
 		break;
 	case 4://Odredjivanje linije sa kojom data linija ima najvise zajednickih stajalista
 		cout << "Unesite sifru linije, velikim slovima\n";
 		cin >> line;
 		cout << n->lineWithMostMutualStation(line)->getCode() << "\n";
+		pauseScreen();
 		break;//TODO: Prikaz svih maksimalnih
 	case 5://Odredjivanje najblizeg stajalista u odnosu na zadatu geografsku lokaciju, 
 		   //uz mogucnost odredjivanja najblizeg stajalista samo odredjenje linije
 		closestStation(n);
+		pauseScreen();
 		break;
 	case 6://Odredjivanje broja zajednickih stajalista za sve parove linija koje imaju zajednicko stajaliste,
 		   //uz mogucnost filtriranja na parove linija koje imaju zajednickih stajalista vise od zadatog broja
 		n->numberOfMutualStationsForAllLines();
+		pauseScreen();
 		break;
 	case 7://Odredjivanje svih linija koje prolaze kroz dato stajaliste
 		cout << "Unesite sifru stajalista\n";
@@ -261,9 +268,11 @@ void groupModeMenu(Network *n)
 		{
 			cout << "To stajaliste ne postoji\n";
 		}
+		pauseScreen();
 		break;
 	case 8://Odredjivanje svih stajalista do kojih je moguce stici iz zadatog stajalista uz voznju maksimalno jednu stanicu
 		stations1DistanceAway(n);
+		pauseScreen();
 		break;
 	case 9://Odredjivanje najmanjeg potrebnog broja presedanja na putu izmedju dva zadata stajalista
 		cout << "Unesite sifru prvog stajalista\n";
@@ -271,6 +280,7 @@ void groupModeMenu(Network *n)
 		cout << "Unesite sifru drugog stajalista\n";
 		cin >> number2;
 		cout << "Najmanji broj presedanja je: " << n->leastTransfersBetweenStations(number, number2) << "\n";
+		pauseScreen();
 		break;
 	case 10://Odredjivanje najkraceg puta izmedju dva stajalista(ne uzimati u obzir geografsku lokaciju,\n    vec za najkraci put uzeti onaj koji se sastoji od najmanjeg broja stajalista)
 		cout << "Unesite sifru prvog stajalista\n";
@@ -278,6 +288,7 @@ void groupModeMenu(Network *n)
 		cout << "Unesite sifru drugog stajalista\n";
 		cin >> number2;
 		cout << "Najmanji broj stajalista je: " << n->leastNumberOfStationsBetweenStations(number, number2) << "\n";
+		pauseScreen();
 		break;
 	case 11:
 		graphGenerating(n);
@@ -399,6 +410,12 @@ void lineManipulation(Network *n) {
 	cout << "Unesite sifru linije koju zelite da menjate\n";
 	cin >> line;
 	Line *l = n->getLine(line);
+	if (l == nullptr)
+	{
+		cout << "Linija ne postoji";
+		pauseScreen();
+		return;
+	}
 	do {
 		lineManipulationText();
 		cin >> control;
@@ -476,4 +493,11 @@ void exitProgram(Network *n)
 	if (number == 2)
 		return;
 	exit(0);
+}
+
+void pauseScreen() {
+	string pause;
+	cout << "Unesite bilo koji karakter\n";
+	cin >> pause;
+	return;
 }
