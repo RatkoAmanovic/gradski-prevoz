@@ -90,6 +90,11 @@ void Line::readStations(Direction d)
 	if(d == Direction::B)
 		fileName = "data\\" + code + "_dirB.txt"; 
 	dir.open(fileName);
+	if (!dir)
+	{
+		cout << "Fajl ne postoji\n";
+		return;
+	}
 	string lineInFile;
 	if (dir.is_open())
 	{

@@ -45,6 +45,11 @@ void Network::readLines()
 	ifstream dir;
 	string fileName = "data\\_lines.txt";
 	dir.open(fileName);
+	if (!dir)
+	{
+		cout << "Fajl ne postoji\n";
+		return;
+	}
 	string lineInFile;
 	if (dir.is_open())
 	{
@@ -66,6 +71,11 @@ void Network::readLine(string code)
 	ifstream dir;
 	string fileName = "data\\_lines.txt";
 	dir.open(fileName);
+	if (!dir)
+	{
+		cout << "Fajl ne postoji\n";
+		return;
+	}
 	string lineInFile;
 	if (dir.is_open())
 	{

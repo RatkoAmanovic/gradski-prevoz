@@ -488,7 +488,7 @@ void exitProgram(Network *n)
 		if (number == 1)
 			graphGenerating(n);
 	}
-	cout << "Da li ste sigurni da zelite da izadjete\n1.DA\n2.NE";
+	cout << "Da li ste sigurni da zelite da izadjete\n1.DA\n2.NE\n";
 	cin >> number;
 	if (number == 2)
 		return;
