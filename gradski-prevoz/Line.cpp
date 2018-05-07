@@ -1,4 +1,5 @@
 #include "Line.h"
+#include <unordered_set>
 
 Line::Line(string code, string firstStop, string lastStop, int number)
 {
