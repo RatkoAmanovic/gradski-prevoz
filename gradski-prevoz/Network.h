@@ -7,8 +7,6 @@
 #ifndef __NETWORK_H_
 #define __NETWORK_H_
 
-
-
 class Network
 {
 public:

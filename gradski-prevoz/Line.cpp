@@ -1,5 +1,4 @@
 #include "Line.h"
-#include <unordered_set>
 
 Line::Line(string code, string firstStop, string lastStop, int number)
 {
@@ -11,6 +10,8 @@ Line::Line(string code, string firstStop, string lastStop, int number)
 
 Line::~Line()
 {
+	A_firstToLastStation.clear();
+	B_lastToFirstStation.clear();
 }
 
 void Line::addStationAndZone(Station *s, Direction d)

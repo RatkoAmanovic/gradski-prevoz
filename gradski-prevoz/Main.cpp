@@ -211,8 +211,7 @@ void groupModeMenu(Network *n)
 	{
 	case 1:
 		cout << *n;
-		cout << "Unestite bilo koji broj da bi ste nastavili sa radom\n";
-		cin >> number;
+		pauseScreen();
 		break;
 	case 2://Odredjivanje skupa linija sa kojima data linija ima zajednicka stajalista(bez obzira na smer kretanja)
 		cout << "Unesite sifru linije, velikim slovima slova\n";
@@ -497,7 +496,8 @@ void exitProgram(Network *n)
 
 void pauseScreen() {
 	string pause;
-	cout << "Unesite bilo koji karakter\n";
-	cin >> pause;
+	cout << "Pritisnite ENTER za nastavak\n";
+	getline(cin, pause);
+	getline(cin, pause);
 	return;
 }
